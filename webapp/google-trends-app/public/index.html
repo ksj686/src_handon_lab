@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Script Runner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      text-align: center;
+    }
+    input {
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      font-size: 16px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Run Python Script</h1>
+  <input type="text" id="inputDate" placeholder="Enter Date (YYYY-MM-DD)">
+  <button id="runButton">Run Script</button>
+  <div id="output"></div>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+    
+    document.getElementById('runButton').addEventListener('click', () => {
+      const dateInput = document.getElementById('inputDate').value;
+      ipcRenderer.send('run-python', dateInput);
+    });
+
+    ipcRenderer.on('python-output', (event, data) => {
+      document.getElementById('output').innerText = data;
+    });
+  </script>
+</body>
+</html>

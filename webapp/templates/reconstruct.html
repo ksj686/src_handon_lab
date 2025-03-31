@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconstruct Map</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reconstruct.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.3.1/ol.min.css">-->
+    
+    
+</head>
+<body>
+    <h1>Reconstruct Map</h1>
+    <img src="static/icons/construct/day.svg" alt="Day Icon">
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/ol@10.3.1/dist/ol.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/reconstruct.js') }}"></script>
+</body>
+</html>

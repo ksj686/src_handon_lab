@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{{ url_for('static', filename='sbadmin2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='sbadmin2/css/sb-admin-2.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='sbadmin2/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
+    {% block style %}{% endblock %}
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'iris/menu.html' %}
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper --> 
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- flex는 흐름. d-flex flex-column 클래스명을 부여하면 기본 흐름은 세로인데 가로로 바꿔줌 -->
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                {% include 'iris/top.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <h1 class="h3 mb-2 text-gray-800">{% block page_title %}{% endblock %}</h1>
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                        {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © Iris 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <script src="{{ url_for('static', filename='sbadmin2/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='sbadmin2/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/vue.js') }}"></script>
+    <script src="{{ url_for('static', filename='sbadmin2/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='sbadmin2/js/sb-admin-2.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='sbadmin2/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='sbadmin2/vendor/chart.js/Chart.min.js') }}"></script>
+
+    {% block script %}{% endblock %}
+</body>
+</html>

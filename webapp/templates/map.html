@@ -1,0 +1,22 @@
+{% extends 'sbadmin2.html' %}
+{% block title %}Map{% endblock %}
+
+
+{% block style %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<link href="{{ url_for('static', filename='css/map.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block page_title %}자전거 사고 다발 지역{% endblock %}
+{% block content %}
+<h1>자전거 사고 다발 지역</h1>
+<div id="map"></div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+{% endblock %}
+
+
+<!-- <script async defer src="http://maps.google.com/maps/api/js?key=내 구글맵 api키값"type="text/javascript"></script> -->

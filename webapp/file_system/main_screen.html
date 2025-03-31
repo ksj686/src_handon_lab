@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage your File System!</title>
+    <style>
+        .titlebar {
+            height: 30px;
+            background-color: #2e2e2e;
+            -webkit-user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .titlebar .title {
+            color: white;
+            margin-left: 10px;
+        }
+        .titlebar .buttons {
+            display: flex;
+        }
+        .titlebar .buttons div {
+            width: 20px;
+            height: 20px;
+            margin: 5px;
+            background-color: #ff5f57;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="titlebar">
+        <div class="title">Custom Title Bar</div>
+        <div class="buttons">
+          <div class="minimize"></div>
+          <div class="maximize"></div>
+          <div class="close"></div>
+        </div>
+      </div>
+    <div class="container">
+        <h1>파일 관리 앱</h1>
+        
+        <div class="button-container">
+            <button id="srcButton">소스 파일/폴더 선택</button>
+            <button id="dstButton">대상 파일/폴더 선택</button>
+        </div>
+
+        <div id="pathDisplay">
+            <p><strong>소스 경로:</strong> <span id="srcPath">선택되지 않음</span></p>
+            <p><strong>대상 경로:</strong> <span id="dstPath">선택되지 않음</span></p>
+        </div>
+
+        <div>
+            <button id="executeButton">작업 실행</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        /*
+        // pyqtApp 객체와 연결
+        let pyqtApp = null;
+
+        // WebChannel 객체가 준비되었을 때 pyqtApp 객체를 연결합니다
+        new QWebChannel(qt.webChannelTransport, function(channel) {
+            pyqtApp = channel.objects.pyqtApp;
+        });
+
+        // src와 dst 경로를 저장할 변수
+        let srcPath = '';
+        let dstPath = '';
+
+        // 소스 경로 선택 버튼 클릭 시 파일 선택
+        document.getElementById('srcButton').addEventListener('click', function() {
+            pyqtApp.selectSrc();
+        });
+
+        // 대상 경로 선택 버튼 클릭 시 폴더 선택
+        document.getElementById('dstButton').addEventListener('click', function() {
+            pyqtApp.selectDst();
+        });
+
+        // 작업 실행 버튼 클릭 시
+        document.getElementById('executeButton').addEventListener('click', function() {
+            if (!srcPath || !dstPath) {
+                displayResult('소스 경로와 대상 경로를 모두 선택해야 합니다.');
+                return;
+            }
+
+            // 명령어 형식: "copy <소스 경로> <대상 경로>"
+            const command = `copy ${srcPath} ${dstPath}`;
+            pyqtApp.execute(command);
+        });
+
+        // pyqtApp에서 경로 선택 결과를 받아서 화면에 표시
+        function setSrcPath(path) {
+            srcPath = path;
+            document.getElementById('srcPath').textContent = path;
+        }
+
+        function setDstPath(path) {
+            dstPath = path;
+            document.getElementById('dstPath').textContent = path;
+        }
+
+        // 작업 실행 결과 표시
+        function displayResult(message) {
+            document.getElementById('result').textContent = message;
+        }
+
+        // PyQt5와 JavaScript 간의 통신을 위한 PyQt5 메서드 호출 설정
+        window.setSrcPath = setSrcPath;
+        window.setDstPath = setDstPath;
+        window.displayResult = displayResult;
+*/
+
+
+        // 여기부터 electron 적용
+        document.querySelector('.close').addEventListener('click', () => {
+            window.api.closeWindow();
+        });
+        document.querySelector('.minimize').addEventListener('click', () => {
+            window.api.minimizeWindow();
+        });
+        document.querySelector('.maximize').addEventListener('click', () => {
+            window.api.maximizeWindow();
+        });
+    </script>
+</body>
+</html>

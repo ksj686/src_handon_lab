@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>크롤링 결과</title>
+</head>
+<body>
+    <h1>크롤링 결과</h1>
+    <p><strong>입력한 URL:</strong> {{ url }}</p>
+
+    <h2>특정 id 요소 내용</h2>
+    <p>{{ id_text }}</p>  <!-- 특정 id의 텍스트 내용 -->
+
+    <h2>특정 class 요소 내용</h2>
+    {% if class_text %}
+        <ul>
+        {% for item in class_text %}
+            <li>{{ item }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No elements with the given class.</p>
+    {% endif %}
+
+    <a href="/">다시 시도</a>
+</body>
+</html>

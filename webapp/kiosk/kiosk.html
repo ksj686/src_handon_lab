@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음식점 키오스크</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .menu-item {
+            background-color: #fafafa;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .menu-item img {
+            max-width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .cart-item {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fafafa;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .total {
+            font-size: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <h1>음식점 키오스크</h1>
+
+        <!-- 메뉴 화면 -->
+        <div id="menuScreen">
+            <h2>메뉴</h2>
+            <div class="menu-grid" id="menuList">
+                <!-- 메뉴 항목이 여기에 동적으로 추가됩니다 -->
+            </div>
+            <button onclick="viewCart()">장바구니 보기</button>
+        </div>
+
+        <!-- 장바구니 화면 -->
+        <div id="cartScreen" style="display: none;">
+            <h2>장바구니</h2>
+            <ul class="cart" id="cartList">
+                <!-- 장바구니 항목이 여기에 동적으로 추가됩니다 -->
+            </ul>
+            <div class="total" id="totalPrice">총 금액: 0원</div>
+            <button onclick="confirmOrder()">주문 완료</button>
+            <button onclick="backToMenu()">메뉴로 돌아가기</button>
+        </div>
+    </div>
+
+    <script>
+        let menuItems = [
+            { name: "햄버거", price: 5000, img: "https://via.placeholder.com/100" },
+            { name: "치킨", price: 8000, img: "https://via.placeholder.com/100" },
+            { name: "피자", price: 10000, img: "https://via.placeholder.com/100" },
+            { name: "떡볶이", price: 4000, img: "https://via.placeholder.com/100" },
+            { name: "음료", price: 2000, img: "https://via.placeholder.com/100" },
+            { name: "샌드위치", price: 6000, img: "https://via.placeholder.com/100" }
+        ];
+
+        let cart = [];
+
+        // 메뉴 항목을 화면에 추가
+        function loadMenu() {
+            const menuList = document.getElementById("menuList");
+            menuList.innerHTML = ''; // 기존 항목 초기화
+            menuItems.forEach(item => {
+                const div = document.createElement("div");
+                div.className = 'menu-item';
+                div.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p>${item.price}원</p>
+                    <button onclick="addToCart('${item.name}', ${item.price})">장바구니에 추가</button>
+                `;
+                menuList.appendChild(div);
+            });
+        }
+
+        // 장바구니에 항목 추가
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            alert(`${name}이 장바구니에 추가되었습니다.`);
+
+            // 서버로 데이터 전송
+            fetch('http://127.0.0.1:5000/add_to_cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ item_name: name, item_price: price })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log('서버에 데이터 전송 성공');
+                }
+            });
+        }
+
+        // 장바구니 화면으로 전환
+        function viewCart() {
+            document.getElementById("menuScreen").style.display = 'none';
+            document.getElementById("cartScreen").style.display = 'block';
+            updateCart();
+        }
+
+        // 장바구니 내용 업데이트
+        function updateCart() {
+            const cartList = document.getElementById("cartList");
+            const totalPrice = document.getElementById("totalPrice");
+            cartList.innerHTML = ''; // 기존 항목 초기화
+            let total = 0;
+
+            cart.forEach(item => {
+                const li = document.createElement("li");
+                li.className = 'cart-item';
+                li.innerHTML = `${item.name} - ${item.price}원`;
+                cartList.appendChild(li);
+                total += item.price;
+            });
+
+            totalPrice.innerHTML = `총 금액: ${total}원`;
+        }
+
+        // 주문 완료 처리
+        function confirmOrder() {
+            alert("주문이 완료되었습니다. 감사합니다!");
+            cart = []; // 장바구니 비우기
+
+            // 서버로 주문 데이터 전송
+            fetch('http://127.0.0.1:5000/confirm_order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log('주문 완료 메시지가 서버로부터 성공적으로 수신됨');
+                }
+            }).then(() => { backToMenu(); });
+        }
+
+        // 메뉴로 돌아가기
+        function backToMenu() {
+            document.getElementById("cartScreen").style.display = 'none';
+            document.getElementById("menuScreen").style.display = 'block';
+        }
+
+        // 초기화
+        loadMenu();
+    </script>
+</body>
+</html>

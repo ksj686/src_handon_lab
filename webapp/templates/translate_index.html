@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multilingual Website</title>
+</head>
+<body>
+  <h1 id="welcome"></h1>
+  <p id="greeting"></p>
+  <!-- 언어 선택 UI -->
+  <button onclick="changeLanguage('en')">English</button>
+  <button onclick="changeLanguage('ko')">한국어</button>
+  <button onclick="changeLanguage('ja')">日本語</button>
+  <script src="{{ url_for('static', filename='js/translate.js') }}" defer></script>
+</body>
+</html>
